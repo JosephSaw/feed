@@ -193,6 +193,13 @@ export default (ins: Feed) => {
       item.enclosure = formatEnclosure(entry.video, "video");
     }
 
+    if (entry.extensions) {
+      for (const extension of entry.extensions) {
+        if (typeof extension.objects === 'string')
+          item[extension.name] = { _text: extension.objects }
+      }
+    }
+
     base.rss.channel.item.push(item);
   });
 
