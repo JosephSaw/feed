@@ -27,6 +27,11 @@ export default (ins: Feed) => {
     },
   };
 
+  const namespaces = options.namespaces || {}
+  for (const key in namespaces) {
+    base.rss._attributes[key] = namespaces[key];
+  }
+
   /**
    * Channel language
    * https://validator.w3.org/feed/docs/rss2.html#ltlanguagegtSubelementOfLtchannelgt
@@ -107,6 +112,10 @@ export default (ins: Feed) => {
         rel: "hub"
       }
     };
+  }
+
+  for (const key in ins.extra) {
+    base.rss.channel[key] = ins.extra[key];
   }
 
   /**
@@ -193,10 +202,9 @@ export default (ins: Feed) => {
       item.enclosure = formatEnclosure(entry.video, "video");
     }
 
-    if (entry.extensions) {
-      for (const extension of entry.extensions) {
-        if (typeof extension.objects === 'string')
-          item[extension.name] = { _text: extension.objects }
+    if (entry.extra) {
+      for (const key in entry.extra) {
+        item[key] = entry.extra[key];
       }
     }
 

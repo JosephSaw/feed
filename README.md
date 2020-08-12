@@ -46,7 +46,8 @@ const feed = new Feed({
     name: "John Doe",
     email: "johndoe@example.com",
     link: "https://example.com/johndoe"
-  }
+  },
+  extra: [] array of xml-js objects
 });
 
 posts.forEach(post => {
